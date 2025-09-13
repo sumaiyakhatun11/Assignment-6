@@ -1,4 +1,3 @@
-
 const cartContainer = document.querySelector(".cart");
 const totalPriceElement = document.querySelector(".flex.justify-between.m-5 span");
 
@@ -14,7 +13,6 @@ function hideLoading() {
   loading.classList.add("hidden");
 }
 
-
 function updateTotal() {
     let total = 0;
     for (const key in cart) {
@@ -25,7 +23,7 @@ function updateTotal() {
 }
 
 const loadAllCategories = () => {
-    showLoading(); // 🔥 spinner show
+    showLoading(); // spinner show
     fetch("https://openapi.programming-hero.com/api/plants")
         .then((res) => res.json())
         .then((json) => {
@@ -36,11 +34,11 @@ const loadAllCategories = () => {
             }
         })
         .catch((err) => console.error("Error fetching plants:", err))
-        .finally(() => hideLoading()); // 🔥 spinner hide
+        .finally(() => hideLoading()); // spinner hide
 };
 
 const loadTressByCategories = (id) => {
-    showLoading(); // 🔥 spinner show
+    showLoading(); // spinner show
     fetch(`https://openapi.programming-hero.com/api/category/${id}`)
         .then((res) => res.json())
         .then((json) => {
@@ -51,8 +49,9 @@ const loadTressByCategories = (id) => {
             }
         })
         .catch((err) => console.error("Error fetching plants:", err))
-        .finally(() => hideLoading()); // 🔥 spinner hide
+        .finally(() => hideLoading()); // spinner hide
 };
+
 const displayPlants = (plants) => {
     const allPlantsContainer = document.getElementById('all-plants-container');
     allPlantsContainer.innerHTML = "";
@@ -82,11 +81,9 @@ const displayPlants = (plants) => {
         const addToCartBtn = div.querySelector("button");
         addToCartBtn.addEventListener("click", () => {
             if (cart[plant.name]) {
-                
                 cart[plant.name].quantity += 1;
                 cart[plant.name].element.querySelector(".cart-quantity").innerText = cart[plant.name].quantity;
             } else {
-                
                 const cartItem = document.createElement("div");
                 cartItem.className = "bg-[#f0fdf4ff] h-[60px] rounded-xl flex justify-between items-center mt-2";
                 cartItem.innerHTML = `
@@ -119,7 +116,6 @@ const displayPlants = (plants) => {
             updateTotal();
         });
 
-
         // modal click
         const plantNameP = div.querySelector(".plant-name");
         plantNameP.addEventListener("click", () => {
@@ -141,8 +137,6 @@ const loadCategories = () => {
 };
 
 const allTrees = document.getElementById('all-trees');
-
-
 allTrees.classList.add("bg-green-600");
 allTrees.addEventListener("click", () => {
     const allItems = document.querySelectorAll(".category-item");
@@ -156,14 +150,12 @@ const displayCategories = (categories) => {
     allCategories.innerHTML = "";
 
     categories.forEach((cat, index) => {
-
         const div = document.createElement("div");
         div.innerHTML = `
       <div class="category-item text-2xl mt-6 text-[#1F2937] hover:bg-green-600 rounded-lg cursor-pointer p-2">
         ${cat.category_name}
       </div>
     `;
-
         const innerDiv = div.querySelector(".category-item");
 
         // click listener
@@ -177,16 +169,12 @@ const displayCategories = (categories) => {
             innerDiv.classList.add("bg-green-600");
 
             // fetch plants for this category
-            loadTressByCategories(cat.id); // <-- corrected key
+            loadTressByCategories(cat.id);
         });
-
 
         allCategories.append(div);
     });
 };
 
-
 loadCategories();
-
-
 loadAllCategories();
